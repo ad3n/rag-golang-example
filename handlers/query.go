@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 
 	"github.com/gofiber/fiber/v3"
@@ -60,7 +61,7 @@ func QueryHandler(db *sql.DB) fiber.Handler {
 func generateResponse(prompt string) (string, error) {
 	client := api.NewClient(&url.URL{
 		Scheme: "http",
-		Host:   "localhost:11434",
+		Host:   os.Getenv("OLLAMA_HOST"),
 	}, http.DefaultClient)
 
 	response := ""

@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 
 	"github.com/ollama/ollama/api"
 	"github.com/pgvector/pgvector-go"
@@ -23,7 +24,7 @@ type EmbeddingResponse struct {
 func GetEmbedding(text string) ([]float32, error) {
 	client := api.NewClient(&url.URL{
 		Scheme: "http",
-		Host:   "localhost:11434",
+		Host:   os.Getenv("OLLAMA_HOST"),
 	}, http.DefaultClient)
 
 	response, err := client.Embeddings(context.Background(), &api.EmbeddingRequest{
